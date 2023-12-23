@@ -1,0 +1,214 @@
+Question #1: Turning Strings to URLs
+URLs cannot have spaces. Instead, all spaces in a string are replaced with %20. Write an algorithm that replaces all spaces in a string with %20.
+
+You may not use the replace() method or regular expressions to solve this problem. Solve the problem with and without recursion.
+
+Example
+Input: "Jasmine Ann Jones"
+
+Output: "Jasmine%20Ann%20Jones"
+
+Answer: To start
+To start I will split my string to an array buy using .split
+then I will loop through the indices so it strArr[i] = strArr[i].split(" ") meaning if there are any white spaces I will then .join"%20"
+then I will convert newArr to string creating a new Variable called newstr and making it equal strArr.join("")
+then i will return newStr 
+Code:
+function stringsToUrl(string){
+  let strArr = string.split("");
+  for (let i=0; i < strArr.length; i++){
+    strArr[i] = strArr[i].split(" ").join("%20")
+  }
+
+  let newStr = strArr.join("")
+  return newStr
+}
+
+Answer recursion:
+A recursion is a function that calls on its self so I would start by having the function take the string and the index starting at 0 as parameters
+I would then write an if statement if the index equal to the length of the str  return the string
+if the current character  at the index position is a space we should replace it with "%20" by using the substring method to extract the parts of the string befor and after the space and the concatenating them with "%20" in bewtween
+then return replaceSpaceRecursion() with a str and index+1 the function then will continue untill all characters have been processed.
+
+function replaceSpaceRecursion(str, index = 0){
+  if( index ===  str.length){
+    return str
+  }
+  if(str[index] === " "){
+    str = str.substring(0, index) + "%20" + str.substring(index + 1);
+  }
+  return replaceSpaceRecursion(str, index +1)
+}
+
+Question #2: Array Deduping
+Write an algorithm that removes duplicates from an array. Do not use a function like filter() to solve this. Once you have solved the problem, demonstrate how it can be solved with filter(). Solve the problem with and without recursion.
+
+Example
+Input: [7, 9, "hi", 12, "hi", 7, 53]
+
+Output: [7, 9, "hi", 12, 53]
+
+Answer: First I will create a new empty array then i will loop through the array.
+I will then create an if statement if newArray does not include arrays unique character I will the push the unique characters
+into newArray and return newArray with no duplicates
+
+
+Code:
+function deduping(array){
+  let newArray = []
+  for(let i=0; i < array.length; i++ ){
+    if(!newArray.includes(array[i]))
+    newArray.push(array[i])
+  }
+  return newArray;
+}
+
+Filtering:
+
+I am not 100% confident on this method
+I think i would also create an empty array to push the unique characters once filter through the Array and return true
+
+Code:
+function filterDeduping(array) {
+  let newArray = [];
+  return array.filter(char => {
+    if (!newArray.includes(char)) {
+      newArray.push(char);
+      return true;
+    }
+  });
+}
+
+code: reccursive
+
+function dedupingRecursion(array, index = 0, result = []) {
+  if (index === array.length) {
+    return result;
+  }
+
+  if (!result.includes(array[index])) {
+    result.push(array[index]);
+  }
+
+  return dedupingRecursion(array, index + 1, result);
+}
+
+
+Question #3: Compressing Strings
+Write an algorithm that takes a string with repeated characters and compresses them, using a number to show how many times the repeated character has been compressed. For instance, aaa would be written as 3a. Solve the problem with and without recursion.
+
+Example
+Input: "aaabccdddda"
+
+Output: "3ab2c4da"
+
+Answer:
+ I would create a function to that will .split("") into an array i would create an  count variable starting at zero and an New Empty string  
+  i would then loop through the array and create an if statement if array[i] === array[i+1] meaning if the the two indices are the same increase count 
+  then create an else statement with the newString += to the strArr[i] + count with count = 1 and return stringArr
+  return a ternary conditional statement that will check if the newStringLength is less than the original string if true it will return the new string is false it will return the original string.
+
+
+Code:
+
+function compressedString(string) {
+  let count = 1;
+  let strArr = string.split("");
+  let newString = "";
+
+  for (let i = 0; i < strArr.length; i++) {
+    if (strArr[i] === strArr[i + 1]) {
+      count++;
+    } else {
+      newString += count + strArr[i];
+      count = 1;
+    }
+  }
+
+  return newString.length < string.length ? newString : string;
+}
+answer: 
+I would create a function that takes a str as a parameter and the current index equal to zero and an empty string "Compressed", and count equal to 1 to count the repeating characters
+initially the base case would be checking if the current index is equal to the length of the input str.length and have it return the final compressed string
+then we would be checking if the str index is the same as the next character if so then the count increases by 1
+if the characters are different we add count + character to the the string. if the count is greater than 1 we include the count if not we just add the character 
+then we return the recursion function with the updated index and compressed string and the count
+
+
+
+
+reccursive code:
+
+function compressStringRecursion(str, index = 0, compressed = '', count = 1) {
+  if (index === str.length) {
+    return compressed;
+  }
+
+  if (str[index] === str[index + 1]) {
+    count++;
+  } else {
+    compressed += (count > 1 ? count : '') + str[index];
+    count = 1;
+  }
+
+  return compressStringRecursion(str, index + 1, compressed, count);
+}
+
+Question #4: Checking for Uniqueness
+Write an algorithm that determines whether all the elements in a string are unique. You may not convert the string into an array or use array methods to solve this problem. The algorithm should return a boolean.
+
+Example
+Input: "hello"
+
+Output: false
+
+Input: "copyright"
+
+Output: true
+Answer: I created a function that turns the inputString into an Array 
+Then a nested for loop to loop through all the indices and an if statement checking if the input Array indices are equal to each other return false
+and else return true
+
+Code:  
+function checkUniqueness(inputString){
+  let inputArr = inputString.split("");
+  for (let i=0; i< inputArr.length; i++)
+    for(let j=0; j<inputArr.length; j++){
+      if(inputArr[i] === inputArr[j])
+        return false 
+   } 
+  return true;
+}
+
+  
+
+Question #5: Array Sorting
+Write an algorithm that sorts an array without using the sort() method. There are many different sorting algorithms — take the time to read about the following:
+
+Quick sort
+Merge sort
+Heap sort
+Insertion sort
+Bubble sort
+Selection sort
+You may implement any of the above algorithms (or your own) to solve the problem — as long as it doesn't use sort().
+
+Example
+Input: [9, 2, 7, 12]
+
+Output: [2, 7, 9, 12]
+
+Answer:
+
+Code: 
+Function ArraySorting(inputArray){  
+  let sortedArray = [];
+  inputArray.forEach(number, index)=>{
+    if number[i] is < number[i]
+    
+  }
+    }
+
+
+    I dont know 
+  

@@ -1,0 +1,36 @@
+//  split my string to array buy using .split
+//loop through the indices if there are any white spaces I will then .join"%20"
+//then I will convert newArr to string creating a new Variable called newstr and making it equal strArr.join("")
+//then i will return newStr 
+
+Input: "Jasmine Ann Jones"
+
+Output: "Jasmine%20Ann%20Jones"
+
+
+Code:
+function stringsToUrl(string){
+  let strArr = string.split("");
+  for (let i=0; i < strArr.length; i++){
+    strArr[i] = strArr[i].split(" ").join("%20")
+  }
+
+  let newStr = strArr.join("")
+  return newStr
+}
+
+
+// create a recursion function 
+//write an if statement if the index equal to the length of the str  return the string
+
+//then return replaceSpaceRecursion() with a str and index+1 the function then will continue untill all characters have been processed.
+
+function replaceSpaceRecursion(string, index = 0){
+  if( index ===  str.length){
+    return str
+  }
+  if(str[index] === " "){
+    str = str.substring(0, index) + "%20" + str.substring(index + 1);
+  }
+  return replaceSpaceRecursion(str, index +1)
+}
